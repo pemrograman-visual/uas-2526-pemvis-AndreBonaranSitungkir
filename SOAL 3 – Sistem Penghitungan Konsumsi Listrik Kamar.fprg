@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="SOAL 3 &#8211; Sistem Penghitungan Konsumsi Listrik Kamar"/>
+        <attribute name="authors" value="pc"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2025-12-17 04:21:26 PM"/>
+        <attribute name="created" value="cGM7TEFQVE9QLUU3RzNCVU5FOzIwMjUtMTItMTc7MDM6MTA6MDcgUE07MjUzOQ=="/>
+        <attribute name="edited" value="cGM7TEFQVE9QLUU3RzNCVU5FOzIwMjUtMTItMTc7MDQ6MjE6MjYgUE07MTsyNjUx"/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="n, i, j, jmlPerangkat" type="Integer" array="False" size=""/>
+            <declare name="totalKamar, totalPribadi, wattInput" type="Integer" array="False" size=""/>
+            <declare name="namaPenghuni" type="String" array="True" size="20"/>
+            <declare name="totalPerOrang" type="Integer" array="True" size="20"/>
+            <assign variable="totalKamar" expression="0"/>
+            <output expression="&quot;Jumlah penghuni: &quot;" newline="True"/>
+            <input variable="n"/>
+            <for variable="i" start="0" end="n-1" direction="inc" step="1">
+                <output expression="&quot;Penghuni ke-&quot; &amp; (i+1) &amp; &quot;: &quot;" newline="True"/>
+                <input variable="namaPenghuni[i]"/>
+                <output expression="&quot;Jumlah perangkat: &quot;" newline="True"/>
+                <input variable="jmlPerangkat"/>
+                <assign variable="totalPribadi" expression="0"/>
+                <for variable="j" start="1" end="jmlPerangkat" direction="inc" step="1">
+                    <assign variable="wattInput" expression="ambilWattValid(j)"/>
+                    <assign variable="totalPribadi" expression="totalPribadi + wattInput"/>
+                </for>
+                <assign variable="totalPerOrang[i]" expression="totalPribadi"/>
+                <assign variable="totalKamar" expression="totalKamar + totalPribadi"/>
+            </for>
+            <output expression="&quot;&quot;" newline="True"/>
+            <output expression="&quot;Total konsumsi: &quot;" newline="True"/>
+            <for variable="i" start="0" end="n-1" direction="inc" step="1">
+                <output expression="namaPenghuni[i] &amp; &quot;=&quot; &amp; totalPerOrang[i] &amp; &quot; wh&quot;" newline="True"/>
+            </for>
+            <output expression="&quot;Total konsumsi kamar = &quot; &amp; totalKamar &amp; &quot; wh&quot;" newline="True"/>
+            <call expression="cekStatusBahaya(totalKamar)"/>
+        </body>
+    </function>
+    <function name="ambilWattValid" type="Integer" variable="watt">
+        <parameters>
+            <parameter name="urutan" type="Integer" array="False"/>
+        </parameters>
+        <body>
+            <declare name="watt" type="Integer" array="False" size=""/>
+            <do expression="watt&lt;0">
+                <output expression="&quot;Input watt perangkat ke-&quot; &amp;urutan&amp; &quot;:&quot;" newline="True"/>
+                <input variable="watt"/>
+                <if expression="watt&lt;0">
+                    <then>
+                        <output expression="&quot;INVALID&quot;" newline="True"/>
+                    </then>
+                    <else/>
+                </if>
+            </do>
+        </body>
+    </function>
+    <function name="cekStatusBahaya" type="None" variable="">
+        <parameters>
+            <parameter name="totalKamar" type="Integer" array="False"/>
+        </parameters>
+        <body>
+            <if expression="totalKamar&gt;10000">
+                <then>
+                    <output expression="&quot;PERINGATAN! Konsumsi melampaui batas (Overload)!&quot;" newline="True"/>
+                </then>
+                <else/>
+            </if>
+        </body>
+    </function>
+</flowgorithm>

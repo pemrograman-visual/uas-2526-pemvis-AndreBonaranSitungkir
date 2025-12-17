@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="SOAL 1 &#8211; Sistem Evaluasi Kantin Asrama"/>
+        <attribute name="authors" value="pc"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2025-12-17 02:47:00 PM"/>
+        <attribute name="created" value="cGM7TEFQVE9QLUU3RzNCVU5FOzIwMjUtMTItMTc7MDE6MjU6NDQgUE07MjU0NA=="/>
+        <attribute name="edited" value="cGM7TEFQVE9QLUU3RzNCVU5FOzIwMjUtMTItMTc7MDI6NDc6MDAgUE07MTsyNjQ5"/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="n, i, min, max, countHigh" type="Integer" array="False" size=""/>
+            <declare name="ratings" type="Integer" array="True" size="20"/>
+            <declare name="sum, average" type="Real" array="False" size=""/>
+            <assign variable="min" expression="6"/>
+            <assign variable="max" expression="0"/>
+            <assign variable="countHigh" expression="0"/>
+            <assign variable="sum" expression="0"/>
+            <do expression="n&lt;1 || n&gt;20">
+                <input variable="n"/>
+                <for variable="i" start="0" end="n-1" direction="inc" step="1">
+                    <assign variable="ratings[i]" expression="ambilInputValid(i+1)"/>
+                    <assign variable="sum" expression="sum + ratings[i]"/>
+                    <if expression="ratings[i]&gt;max">
+                        <then>
+                            <assign variable="max" expression="ratings[i]"/>
+                        </then>
+                        <else/>
+                    </if>
+                    <if expression="ratings[i]&lt;min">
+                        <then>
+                            <assign variable="min" expression="ratings[i]"/>
+                        </then>
+                        <else/>
+                    </if>
+                    <if expression="ratings[i]&gt;=4">
+                        <then>
+                            <assign variable="countHigh" expression="countHigh+1"/>
+                        </then>
+                        <else/>
+                    </if>
+                </for>
+                <assign variable="average" expression="sum/n"/>
+                <output expression="&quot;Daftar rating: &quot;" newline="True"/>
+                <for variable="i" start="0" end="n-1" direction="inc" step="1">
+                    <output expression="ratings[i]" newline="False"/>
+                </for>
+                <output expression="&quot;&quot;" newline="True"/>
+                <output expression="&quot;Rata-rata: &quot;&amp; average" newline="True"/>
+                <output expression="&quot;Tertinggi: &quot;&amp;max" newline="True"/>
+                <output expression="&quot;Terendah: &quot;&amp;min" newline="True"/>
+                <output expression="&quot;Reviewer rating &gt;= 4: &quot; &amp; countHigh &amp; &quot; orang&quot;" newline="True"/>
+                <call expression="Evaluasi(average)"/>
+            </do>
+        </body>
+    </function>
+    <function name="ambilInputValid" type="Integer" variable="rating">
+        <parameters>
+            <parameter name="urutan" type="Integer" array="False"/>
+        </parameters>
+        <body>
+            <declare name="rating" type="Integer" array="False" size=""/>
+            <declare name="valid" type="Boolean" array="False" size=""/>
+            <assign variable="valid" expression="false"/>
+            <while expression="valid==false">
+                <output expression="urutan" newline="True"/>
+                <input variable="rating"/>
+                <if expression="rating&gt;=1 &amp;&amp; rating &lt;= 5">
+                    <then>
+                        <assign variable="valid" expression="true"/>
+                    </then>
+                    <else/>
+                </if>
+            </while>
+        </body>
+    </function>
+    <function name="Evaluasi" type="None" variable="">
+        <parameters>
+            <parameter name="rata" type="Real" array="False"/>
+        </parameters>
+        <body>
+            <if expression="rata&lt;3">
+                <then>
+                    <output expression="&quot;Kantin perlu evaluasi manajemen!&quot;" newline="True"/>
+                </then>
+                <else>
+                    <if expression="rata&lt;4">
+                        <then>
+                            <output expression="&quot;Kondisi cukup, masih perlu peningkatan.&quot;" newline="True"/>
+                        </then>
+                        <else>
+                            <output expression="&quot;Kantin dalam kondisi baik.&quot;" newline="True"/>
+                        </else>
+                    </if>
+                </else>
+            </if>
+        </body>
+    </function>
+</flowgorithm>

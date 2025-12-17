@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="SOAL 4 &#8211; Sistem Penjadwalan Shift Asisten Lab"/>
+        <attribute name="authors" value="pc"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2025-12-17 04:41:34 PM"/>
+        <attribute name="created" value="cGM7TEFQVE9QLUU3RzNCVU5FOzIwMjUtMTItMTc7MDQ6MjE6MzUgUE07MjU0Mw=="/>
+        <attribute name="edited" value="cGM7TEFQVE9QLUU3RzNCVU5FOzIwMjUtMTItMTc7MDQ6NDE6MzQgUE07MTsyNjUy"/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="n, i, total, maxShift, minShift" type="Integer" array="False" size=""/>
+            <declare name="nama" type="String" array="True" size="20"/>
+            <declare name="shift" type="Integer" array="True" size="20"/>
+            <declare name="average" type="Real" array="False" size=""/>
+            <declare name="maxName, minName" type="String" array="False" size=""/>
+            <assign variable="total" expression="0"/>
+            <assign variable="maxShift" expression="-1"/>
+            <assign variable="minShift" expression="999"/>
+            <output expression="&quot;Jumlah asisten:&quot;" newline="True"/>
+            <input variable="n"/>
+            <for variable="i" start="0" end="n-1" direction="inc" step="1">
+                <output expression="&quot;Nama asisten ke-&quot; &amp; (i+1) &amp; &quot;:&quot;" newline="True"/>
+                <input variable="nama[i]"/>
+                <assign variable="shift[i]" expression="ambilShift(nama[i])"/>
+                <assign variable="total" expression="total + shift[i]"/>
+                <if expression="shift[i] &gt; maxShift">
+                    <then>
+                        <assign variable="maxShift" expression="shift[i]"/>
+                        <assign variable="maxName" expression="nama[i]"/>
+                    </then>
+                    <else/>
+                </if>
+                <if expression="shift[i] &lt; minShift">
+                    <then>
+                        <assign variable="minShift" expression="shift[i]"/>
+                        <assign variable="minName" expression="nama[i]"/>
+                    </then>
+                    <else/>
+                </if>
+            </for>
+            <assign variable="average" expression="total/n"/>
+            <output expression="&quot;Daftar shift:&quot;" newline="True"/>
+            <for variable="i" start="0" end="n-1" direction="inc" step="1">
+                <output expression="nama[i] &amp; &quot;=&quot; &amp; shift[i]" newline="True"/>
+            </for>
+            <output expression="&quot;Total shift = &quot; &amp; total" newline="True"/>
+            <output expression="&quot;Rata-rata = &quot; &amp; average" newline="True"/>
+            <output expression="&quot;Shift terbanyak: &quot; &amp; maxName &amp; &quot; (&quot; &amp; maxShift &amp; &quot;)&quot;" newline="True"/>
+            <output expression="&quot;Shift tersedikit: &quot; &amp; minName &amp; &quot; (&quot; &amp; minShift &amp; &quot;)&quot;" newline="True"/>
+            <call expression="cekEvaluasi(average)"/>
+        </body>
+    </function>
+    <function name="ambilShift" type="Integer" variable="jml">
+        <parameters>
+            <parameter name="namaAsisten" type="String" array="False"/>
+        </parameters>
+        <body>
+            <declare name="jml" type="Integer" array="False" size=""/>
+            <do expression="jml&lt;0">
+                <output expression="namaAsisten&amp; &quot; -&gt; Masukkan jumlah shift:&quot;" newline="True"/>
+                <input variable="jml"/>
+                <if expression="jml&lt;0">
+                    <then>
+                        <output expression="&quot;INVALID&quot;" newline="True"/>
+                    </then>
+                    <else/>
+                </if>
+            </do>
+        </body>
+    </function>
+    <function name="cekEvaluasi" type="None" variable="">
+        <parameters>
+            <parameter name="rata" type="Real" array="False"/>
+        </parameters>
+        <body>
+            <if expression="rata&lt;3">
+                <then>
+                    <output expression="&quot;Distribusi tidak merata.&quot;" newline="True"/>
+                </then>
+                <else>
+                    <if expression="rata &gt;= 5">
+                        <then>
+                            <output expression="&quot;Shift terlalu padat.&quot;" newline="True"/>
+                        </then>
+                        <else/>
+                    </if>
+                </else>
+            </if>
+        </body>
+    </function>
+</flowgorithm>

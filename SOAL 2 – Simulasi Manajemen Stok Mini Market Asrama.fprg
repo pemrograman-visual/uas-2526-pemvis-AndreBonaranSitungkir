@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="SOAL 2 &#8211; Simulasi Manajemen Stok Mini Market Asrama"/>
+        <attribute name="authors" value="pc"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2025-12-17 04:04:51 PM"/>
+        <attribute name="created" value="cGM7TEFQVE9QLUU3RzNCVU5FOzIwMjUtMTItMTc7MDI6MDI6MjUgUE07MjUzOQ=="/>
+        <attribute name="edited" value="cGM7TEFQVE9QLUU3RzNCVU5FOzIwMjUtMTItMTc7MDQ6MDQ6NTEgUE07MTsyNjUw"/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="namaBarang" type="String" array="True" size="10"/>
+            <declare name="stokAwal, terjual, sisaStok" type="Integer" array="True" size="10"/>
+            <declare name="n, i" type="Integer" array="False" size=""/>
+            <input variable="n"/>
+            <for variable="i" start="0" end="n-1" direction="inc" step="1">
+                <output expression="&quot;Barang ke-&quot;&amp;(i+1)" newline="True"/>
+                <input variable="namaBarang[i]"/>
+                <assign variable="stokAwal[i]" expression="ambilStokValid()"/>
+                <assign variable="terjual[i]" expression="ambilTerjualValid(stokAwal[i])"/>
+                <assign variable="sisaStok[i]" expression="stokAwal[i] - terjual[i]"/>
+            </for>
+            <output expression="&quot;Nama | Stok Awal | Terjual | Sisa | Status&quot;" newline="True"/>
+            <for variable="i" start="0" end="n-1" direction="inc" step="1">
+                <declare name="statusPesan" type="String" array="False" size=""/>
+                <assign variable="statusPesan" expression="cekStatus(sisaStok[i])"/>
+                <output expression="namaBarang[i]&amp;&quot;|&quot;&amp;stokAwal[i]&amp;&quot;|&quot;&amp;terjual[i]&amp;&quot;|&quot;&amp;sisaStok[i]&amp;&quot;|&quot;&amp;statusPesan" newline="True"/>
+            </for>
+        </body>
+    </function>
+    <function name="ambilStokValid" type="Integer" variable="qty">
+        <parameters/>
+        <body>
+            <declare name="qty" type="Integer" array="False" size=""/>
+            <do expression="qty&lt;0">
+                <input variable="qty"/>
+                <if expression="qty&lt;0">
+                    <then>
+                        <output expression="&quot;INVALID&quot;" newline="True"/>
+                    </then>
+                    <else/>
+                </if>
+            </do>
+        </body>
+    </function>
+    <function name="ambilTerjualValid" type="Integer" variable="qty">
+        <parameters>
+            <parameter name="batasStok" type="Integer" array="False"/>
+        </parameters>
+        <body>
+            <declare name="qty" type="Integer" array="False" size=""/>
+            <do expression="qty&lt;0 || qty&gt; batasStok">
+                <input variable="qty"/>
+                <if expression="qty&lt;0">
+                    <then>
+                        <output expression="&quot;INVALID&quot;" newline="True"/>
+                    </then>
+                    <else/>
+                </if>
+                <if expression="qty&gt; batasStok">
+                    <then>
+                        <output expression="&quot;INVALID&quot;" newline="True"/>
+                    </then>
+                    <else/>
+                </if>
+            </do>
+        </body>
+    </function>
+    <function name="cekStatus" type="String" variable="status">
+        <parameters>
+            <parameter name="sisa" type="Integer" array="False"/>
+        </parameters>
+        <body>
+            <declare name="status" type="String" array="False" size=""/>
+            <if expression="sisa==0">
+                <then>
+                    <assign variable="status" expression="&quot;Habis, segera restock!&quot;"/>
+                </then>
+                <else>
+                    <if expression="sisa&lt;5">
+                        <then>
+                            <assign variable="status" expression="&quot;Stok menipis.&quot;"/>
+                        </then>
+                        <else>
+                            <assign variable="status" expression="&quot;Stok aman.&quot;"/>
+                        </else>
+                    </if>
+                </else>
+            </if>
+        </body>
+    </function>
+</flowgorithm>
